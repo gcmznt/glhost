@@ -2,11 +2,17 @@
     $hosts_file = '';  # file hosts di sistema - default ''
     $root = $_SERVER["DOCUMENT_ROOT"];  # posizione della server_root - default $_SERVER["DOCUMENT_ROOT"]
 
-    function is_in_localhost($hn = '') {
+    function subfolders_in_hosts($hn = '') {
         global $hosts_file_content;
-        return (($hn != '') && strpos($hosts_file_content, $hn)) ? true : false;
+        if ($hn == '') return false;
+        preg_match_all('/(?P<matches> [\w\d-]+.'.$hn.')/', $hosts_file_content, $matches);
+        return $matches['matches'];
     }
-    function add_to_localhost($pj = '') {
+    function is_in_hosts($hn = '') {
+        global $hosts_file_content;
+        return (($hn != '') && strpos($hosts_file_content, ' '.$hn)) ? true : false;
+    }
+    function add_to_localhost($pj = '', $go = false) {
         global $root;
         global $dir;
         global $hosts_file;
@@ -17,10 +23,13 @@
 
         $hn = host_name($dir.$pj);
         $d = $root.$dir.$pj;
-        if (is_dir($d) && !is_in_localhost($hn)) {
+        if (is_dir($d) && !is_in_hosts($hn)) {
             $new_host = "\n127.0.0.1  ".$hn."    \t# automatically added by Giko";
             file_put_contents($hosts_file, $new_host, FILE_APPEND | LOCK_EX);
             $hosts_file_content = file_get_contents($hosts_file);
+        }
+        if ($go) {
+            header('Location: http://'.$hn);
         }
     }
     function host_name($dir) {
@@ -42,8 +51,7 @@
     $level = count($path)-2;
     $button_html = '<a href="%s" class="button %s">%s</a>';
 
-    if (isset($_GET['add'])) add_to_localhost($_GET['add']);
-    if (isset($_GET['make_hosts_writable'])) chmod($hosts_file, 666);
+    if (isset($_GET['add'])) add_to_localhost($_GET['add'], true);
 
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -116,8 +124,10 @@
             $hostname = host_name($dir.$value);
             printf("<li>".$button_html, '?dir='.$dir.$value.'/', 'blue', $value);
             if ($level < 2) {
-                if (is_in_localhost($hostname)) printf($button_html, 'http://'.$hostname, 'red', $hostname);
-                elseif ($hosts) printf($button_html, '?dir='.$dir.'&add='.$value, '', 'add host');
+                if (is_in_hosts($hostname)) printf($button_html, 'http://'.$hostname, 'red', $hostname);
+                elseif ($hosts) printf($button_html, '?dir='.$dir.'&add='.$value, '', $hostname);
+                $subhosts = subfolders_in_hosts($hostname);
+                foreach ($subhosts AS $sh) { printf($button_html, 'http://'.$sh, 'red', $sh); }
             }
             echo "</li>\n";
         }
