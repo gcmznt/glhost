@@ -74,6 +74,7 @@
         .files_column { padding: 50px 10px 10px; margin: 0 0 0 302px; overflow: auto; list-style-type: none; }
         .files_column li { clear: both; }
         .button { float: left; border: 1px solid #ccc; background: #eee; margin: 3px; text-align: center; color: #666; display: block; border-radius: 5px; padding: 3px 6px; }
+        .right { float: right; }
         .button:hover { border: 1px solid #aaa; background: #ddd; }
         .side_column .button { float: right; clear: both; }
         .red { border: 1px solid #caa; background: #fcc; color: #a00; font-weight: bold; }
@@ -124,10 +125,10 @@
             $hostname = host_name($dir.$value);
             printf("<li>".$button_html, '?dir='.$dir.$value.'/', 'blue', $value);
             if ($level < 2) {
-                if (is_in_hosts($hostname)) printf($button_html, 'http://'.$hostname, 'red', $hostname);
-                elseif ($hosts) printf($button_html, '?dir='.$dir.'&add='.$value, '', $hostname);
+                if (is_in_hosts($hostname)) printf($button_html, 'http://'.$hostname, 'red right', $hostname);
+                elseif ($hosts) printf($button_html, '?dir='.$dir.'&add='.$value, 'right', $hostname);
                 $subhosts = subfolders_in_hosts($hostname);
-                foreach ($subhosts AS $sh) { printf($button_html, 'http://'.$sh, 'yellow', $sh); }
+                foreach ($subhosts AS $sh) { printf($button_html, 'http://'.$sh, 'yellow right', $sh); }
             }
             echo "</li>\n";
         }
