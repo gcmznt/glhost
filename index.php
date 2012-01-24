@@ -127,7 +127,7 @@
                 if (is_in_hosts($hostname)) printf($button_html, 'http://'.$hostname, 'red', $hostname);
                 elseif ($hosts) printf($button_html, '?dir='.$dir.'&add='.$value, '', $hostname);
                 $subhosts = subfolders_in_hosts($hostname);
-                foreach ($subhosts AS $sh) { printf($button_html, 'http://'.$sh, 'red', $sh); }
+                foreach ($subhosts AS $sh) { printf($button_html, 'http://'.$sh, 'yellow', $sh); }
             }
             echo "</li>\n";
         }
