@@ -24,7 +24,7 @@
         $hn = host_name($dir.$pj);
         $d = $root.$dir.$pj;
         if (is_dir($d) && !is_in_hosts($hn)) {
-            $new_host = "\n127.0.0.1  ".$hn."    \t# automatically added by Giko";
+            $new_host = "\n127.0.0.1 ".$hn." # automatically added by glhost";
             file_put_contents($hosts_file, $new_host, FILE_APPEND | LOCK_EX);
             $hosts_file_content = file_get_contents($hosts_file);
         }
@@ -57,14 +57,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
-    <title>Giko's Localhost!</title>
+    <title>glhost!</title>
     
     <style type="text/css">
         html { height: 100%; }
         body { font-family: Verdana, Arial, Helvetica, sans-serif; margin: 0; padding: 0; background: #eee; height: 100%; }
         h1 { position: fixed; padding: 9px 10px; margin: 0; top: 0; border-bottom: 2px solid #eee; background: rgba(255,255,255,0.85); width: 880px; z-index: 10; font-size: 16px; line-height: 20px; color: #333; }
         a { font-size: 11px; text-decoration: none; }
-        .container { width: 900px; margin: 0 auto; background: #fff; min-height: 100%; }
+        .container { width: 900px; margin: 0 auto; background: #fff; min-height: 100%; box-shadow: 0 0 10px #333; }
         .side_column { width: 300px; position: fixed; height: 100%; padding-top: 40px; border-right: 2px solid #eee; }
         .side_column .messages { position: fixed; width: 302px; bottom: 10px; }
         .side_column .messages div { overflow: hidden; padding: 10px; margin-top: 10px; font-size: 12px; font-style: italic; }
@@ -73,23 +73,23 @@
         .dir_tree { background: #fff; padding: 10px; overflow: auto; }
         .files_column { padding: 50px 10px 10px; margin: 0 0 0 302px; overflow: auto; list-style-type: none; }
         .files_column li { clear: both; }
-        .button { float: left; border: 1px solid #ccc; background: #eee; margin: 3px; text-align: center; color: #666; display: block; border-radius: 5px; padding: 3px 6px; }
+        .button { float: left; border: 1px solid #ccc; background: #eee; margin: 3px; text-align: center; color: #666; display: block; border-radius: 5px; padding: 3px 6px; box-shadow: 0px 4px 2px -3px #dbdbdb; }
         .right { float: right; }
-        .button:hover { border: 1px solid #aaa; background: #ddd; }
+        .button:hover { border: 1px solid #aaa; background: #ddd; box-shadow: 0px 1px 1px #dbdbdb; margin: 4px 3px 2px; }
         .side_column .button { float: right; clear: both; }
-        .red { border: 1px solid #caa; background: #fcc; color: #a00; font-weight: bold; }
-        .red:hover { border: 1px solid #c66; background: #faa; }
-        .green { border: 1px solid #aca; background: #cfc; color: #0a0; font-weight: bold; }
-        .green:hover { border: 1px solid #6c6; background: #afa; }
-        .blue { border: 1px solid #aac; background: #ccf; color: #00a; font-weight: bold; }
-        .blue:hover { border: 1px solid #66c; background: #aaf; }
-        .yellow { border: 1px solid #fe6; background: #ffb; color: #fa0; font-weight: bold; }
-        .yellow:hover { border: 1px solid #fd3; background: #ff9; }
+        .red { border-color: #caa; background: #fcc; color: #a00; font-weight: bold; }
+        .red:hover { border-color: #c66; background: #faa; }
+        .green { border-color: #aca; background: #cfc; color: #0a0; font-weight: bold; }
+        .green:hover { border-color: #6c6; background: #afa; }
+        .blue { border-color: #aac; background: #ccf; color: #00a; font-weight: bold; }
+        .blue:hover { border-color: #66c; background: #aaf; }
+        .yellow { border-color: #fe6; background: #ffb; color: #fa0; font-weight: bold; }
+        .yellow:hover { border-color: #fd3; background: #ff9; }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Giko's localhost!</h1>
+        <h1>glhost!</h1>
         <div class="side_column">
             <div class="messages">
 <?php if ($level < 2) { if (!$hosts_file) { $hosts = false; ?>
